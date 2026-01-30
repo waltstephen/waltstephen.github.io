@@ -28,7 +28,7 @@ ninja.data = [{
           description: "",
           section: "Navigation",
           handler: () => {
-            window.location.href = "/cv/";
+            window.location.href = "/https:/waltstephen.github.io/assets/pdf/yijiacv.pdf";
           },
         },{id: "dropdown-bookshelf",
               title: "bookshelf",
