@@ -31,4 +31,4 @@ I am a research intern at [Microsoft Research Asia – Shanghai AI/ML Group](htt
 
 My research interests include visual language models, multi-modal intelligence, reinforcement learning, and agentic systems. I am particularly interested in aligning visual perception with complex reasoning and exploring unified generation toward a world model that integrates perception, reasoning, and creation. I’m open to any internship opportunities.
 
-Contact: fanyj28@mail2.sysu.edu.cn | WeChat available via phone (+86 18338635776)
+Contact: fanyj28@mail2.sysu.edu.cn
