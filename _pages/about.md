@@ -6,7 +6,7 @@ subtitle: Undergraduate Researcher | Computer Science @ Sun Yat-sen University
 
 profile:
   align: right
-  image: prof_pic.jpg
+  image: prof_pic.jpeg
   image_circular: false # crops the image to make it circular
   more_info: >
     <p>School of Computer Science and Engineering</p>
