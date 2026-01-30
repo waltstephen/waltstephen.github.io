@@ -44,20 +44,6 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "nav-teaching",
-          title: "teaching",
-          description: "Course materials, schedules, and resources for classes taught.",
-          section: "Navigation",
-          handler: () => {
-            window.location.href = "/teaching/";
-          },
-        },{id: "nav-people",
-          title: "people",
-          description: "members of the lab or group",
-          section: "Navigation",
-          handler: () => {
-            window.location.href = "/people/";
-          },
         },{id: "dropdown-bookshelf",
               title: "bookshelf",
               description: "",
@@ -440,16 +426,17 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/the_godfather/";
-            },},{id: "news-a-simple-inline-announcement",
-          title: 'A simple inline announcement.',
+            },},{id: "news-started-undergraduate-studies-in-computer-science-and-technology-at-sun-yat-sen-university",
+          title: 'Started undergraduate studies in Computer Science and Technology at Sun Yat-sen University.',
           description: "",
-          section: "News",},{id: "news-a-long-announcement-with-details",
-          title: 'A long announcement with details',
+          section: "News",},{id: "news-joined-human-cyber-physical-intelligence-integration-lab-at-sun-yat-sen-university-as-undergraduate-research-intern-supervised-by-prof-keze-wang",
+          title: 'Joined Human Cyber Physical Intelligence Integration Lab at Sun Yat-sen University as undergraduate...',
           description: "",
-          section: "News",handler: () => {
-              window.location.href = "/news/announcement_2/";
-            },},{id: "news-a-simple-inline-announcement-with-markdown-emoji-sparkles-smile",
-          title: 'A simple inline announcement with Markdown emoji! :sparkles: :smile:',
+          section: "News",},{id: "news-started-research-internship-at-x-era-amp-amp-sun-yat-sen-university-popmart-enterprise-project-developing-vlm-based-defect-detection-with-rlhf",
+          title: 'Started research internship at X-Era &amp;amp;amp; Sun Yat-sen University PopMart Enterprise Project, developing...',
+          description: "",
+          section: "News",},{id: "news-started-research-internship-at-microsoft-research-asia-shanghai-ml-group-working-on-video-generation-and-discretized-vlm-projects",
+          title: 'Started research internship at Microsoft Research Asia - Shanghai ML Group, working on...',
           description: "",
           section: "News",},{id: "projects-project-1",
           title: 'project 1',
