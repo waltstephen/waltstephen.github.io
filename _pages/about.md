@@ -33,8 +33,3 @@ My research interests include visual language models, multi-modal intelligence, 
 
 Contact: fanyj28@mail2.sysu.edu.cn
 
----
-
-<div class="text-center mt-5">
-  <script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=nRAK2jY9iipjVOOcmm2BtF5DU_kMqDhY3fAELK1JZNY&cl=ffffff&w=a"></script>
-</div>
