@@ -25,10 +25,10 @@ latest_posts:
   enabled: false
 ---
 
-I am <b>Yijia Fan</b>, an undergraduate student in Computer Science and Technology at [Sun Yat-sen University](https://www.sysu.edu.cn), supervised by [Prof. Keze Wang](https://sites.google.com/view/kezewang). I am seeking <b>PhD opportunities for Fall 2027</b>.
+I am Yijia Fan, an undergraduate student in Computer Science and Technology at [Sun Yat-sen University](https://www.sysu.edu.cn), supervised by [Prof. Keze Wang](https://kezewang.com/). I am seeking PhD opportunities for Fall 2027.
 
-My research is anchored in the continuous evolution of <b>Visual Language Models (VLMs)</b>, synergizing them with the advanced agentic capabilities of <b>Large Language Models (LLMs)</b> to construct robust multi-modal intelligence. I focus on aligning visual perception with complex reasoning via <b>reinforcement learning</b>. Building on my experience with LLaVA architectures and post-training techniques like RFT, I concurrently explore pathways for unified generation. Ultimately, my long-term objective is to forge a unified world model that seamlessly integrates perception, agentic reasoning, and generative creation.
+I am a research intern at [Microsoft Research Asia – Shanghai AI/ML Group](https://www.microsoft.com/en-us/research/lab/microsoft-research-asia/), working on video generation and discretized VLM projects. I have previously interned at the [Human Cyber-Physical Intelligence Lab](https://www.sysu-hcp.net/) at Sun Yat-sen University and participated in the X-Era & Sun Yat-sen University [Pop Mart](https://www.popmart.com/) Enterprise Project on VLM-based defect detection with RLHF.
 
-Currently, I am a research intern at [Microsoft Research Asia - Shanghai ML Group](https://www.microsoft.com/en-us/research/lab/microsoft-research-asia/), working on video generation and next-generation discretized VLM projects. I have also interned at the [Human Cyber Physical Intelligence Integration Lab](http://www.csbio.info/) at Sun Yat-sen University and participated in the PopMart Enterprise Project with X-Era.
+My research interests include visual language models, multi-modal intelligence, reinforcement learning, and agentic systems. I am particularly interested in aligning visual perception with complex reasoning and exploring unified generation toward a world model that integrates perception, reasoning, and creation.
 
-<b>Contact</b>: fanyj28@mail2.sysu.edu.cn | WeChat available via phone (+86 18338635776)
+Contact: fanyj28@mail2.sysu.edu.cn | WeChat available via phone (+86 18338635776)

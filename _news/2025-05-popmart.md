@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Started research internship at <b>X-Era & Sun Yat-sen University PopMart Enterprise Project</b>, developing VLM-based defect detection with RLHF.
+Started research internship at X-Era & Sun Yat-sen University [Pop Mart](https://www.popmart.com/) Enterprise Project, developing VLM-based defect detection with RLHF.
