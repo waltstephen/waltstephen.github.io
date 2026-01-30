@@ -2,30 +2,28 @@
   <!-- Nav Bar -->
   <nav id="navbar" class="navbar navbar-light navbar-expand-sm {% if site.navbar_fixed %}fixed-top{% else %}sticky-top{% endif %}" role="navigation">
     <div class="container">
-      <a class="navbar-brand title font-weight-lighter" href="{{ site.baseurl }}/">
-        {% if site.logo_image %}
-          <img
-            class="navbar-logo"
-            src="{{ '/assets/img/' | append: site.logo_image | relative_url }}"
-            alt="{{ site.first_name }} {{ site.last_name }} logo"
-          >
-        {% endif %}
-        {% if site.title == 'blank' %}
-          {% if site.first_name %}
-            <span class="font-weight-bold">
-              {{- site.first_name -}}
-            </span>
+      {% if page.permalink != '/' %}
+        <a class="navbar-brand title font-weight-lighter" href="{{ site.baseurl }}/">
+          {% if site.title == 'blank' %}
+            {% if site.first_name %}
+              <span class="font-weight-bold">
+                {{- site.first_name -}}
+              </span>
+            {% endif %}
+            {% if site.middle_name %}
+              {{- site.middle_name -}}
+            {% endif %}
+            {% if site.last_name %}
+              {{- site.last_name -}}
+            {% endif %}
+          {% else %}
+            {{- site.title -}}
           {% endif %}
-          {% if site.middle_name %}
-            {{- site.middle_name -}}
-          {% endif %}
-          {% if site.last_name %}
-            {{- site.last_name -}}
-          {% endif %}
-        {% else %}
-          {{- site.title -}}
-        {% endif %}
-      </a>
+        </a>
+      {% elsif site.enable_navbar_social %}
+        <!-- Social Icons -->
+        <div class="navbar-brand social">{% social_links %}</div>
+      {% endif %}
       <!-- Navbar Toggle -->
       <button
         class="navbar-toggler collapsed ml-auto"
