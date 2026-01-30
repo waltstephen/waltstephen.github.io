@@ -36,8 +36,5 @@ Contact: fanyj28@mail2.sysu.edu.cn
 ---
 
 <div class="text-center mt-5">
-  <a href="https://clustrmaps.com/site/1c0y4" title="Visit tracker">
-    <img src="//clustrmaps.com/map_v2.png?cl=ffffff&w=300&t=tt&d=yiYAsCbm-8Y31v1P37Uqo6sQnArsMBP8eq5WW4qWULU" />
-  </a>
+  <script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=nRAK2jY9iipjVOOcmm2BtF5DU_kMqDhY3fAELK1JZNY&cl=ffffff&w=a"></script>
 </div>
-<p class="text-center text-muted small" style="color: var(--global-text-color-light) !important;">Visitors from around the world</p>
