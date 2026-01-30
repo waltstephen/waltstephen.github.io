@@ -429,14 +429,14 @@ ninja.data = [{
             },},{id: "news-started-undergraduate-studies-in-computer-science-and-technology-at-sun-yat-sen-university",
           title: 'Started undergraduate studies in Computer Science and Technology at Sun Yat-sen University.',
           description: "",
-          section: "News",},{id: "news-joined-human-cyber-physical-intelligence-integration-lab-at-sun-yat-sen-university-as-undergraduate-research-intern-supervised-by-prof-keze-wang",
-          title: 'Joined Human Cyber Physical Intelligence Integration Lab at Sun Yat-sen University as undergraduate...',
+          section: "News",},{id: "news-joined-the-human-cyber-physical-intelligence-lab-at-sun-yat-sen-university-as-an-undergraduate-research-intern-supervised-by-prof-keze-wang",
+          title: 'Joined the Human Cyber-Physical Intelligence Lab at Sun Yat-sen University as an undergraduate...',
           description: "",
-          section: "News",},{id: "news-started-research-internship-at-x-era-amp-amp-sun-yat-sen-university-popmart-enterprise-project-developing-vlm-based-defect-detection-with-rlhf",
-          title: 'Started research internship at X-Era &amp;amp;amp; Sun Yat-sen University PopMart Enterprise Project, developing...',
+          section: "News",},{id: "news-started-research-internship-at-x-era-amp-amp-sun-yat-sen-university-pop-mart-enterprise-project-developing-vlm-based-defect-detection-with-rlhf",
+          title: 'Started research internship at X-Era &amp;amp;amp; Sun Yat-sen University Pop Mart Enterprise Project,...',
           description: "",
-          section: "News",},{id: "news-started-research-internship-at-microsoft-research-asia-shanghai-ml-group-working-on-video-generation-and-discretized-vlm-projects",
-          title: 'Started research internship at Microsoft Research Asia - Shanghai ML Group, working on...',
+          section: "News",},{id: "news-started-research-internship-at-microsoft-research-asia-shanghai-ai-ml-group-working-on-video-generation-and-discretized-vlm-projects",
+          title: 'Started research internship at Microsoft Research Asia – Shanghai AI/ML Group, working on...',
           description: "",
           section: "News",},{id: "projects-project-1",
           title: 'project 1',
@@ -505,7 +505,7 @@ ninja.data = [{
         title: 'email',
         section: 'Socials',
         handler: () => {
-          window.open("mailto:%66%61%6E%79%6A%32%38@%6D%61%69%6C%32.%73%79%73%75.%65%64%75.%63%6F%6D", "_blank");
+          window.open("mailto:%66%61%6E%79%6A%32%38@%6D%61%69%6C%32.%73%79%73%75.%65%64%75.%63%6E", "_blank");
         },
       },{
         id: 'social-rss',
@@ -520,6 +520,13 @@ ninja.data = [{
         section: 'Socials',
         handler: () => {
           window.open("https://github.com/waltstephen", "_blank");
+        },
+      },{
+        id: 'social-scholar',
+        title: 'Google Scholar',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://scholar.google.com/citations?user=9pTJT4EAAAAJ", "_blank");
         },
       },{
       id: 'light-theme',
