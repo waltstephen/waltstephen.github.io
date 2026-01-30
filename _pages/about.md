@@ -29,6 +29,6 @@ I am Yijia Fan, an undergraduate student in Computer Science and Technology at [
 
 I am a research intern at [Microsoft Research Asia – Shanghai AI/ML Group](https://www.microsoft.com/en-us/research/lab/microsoft-research-asia/), working on video generation and discretized VLM projects. I have previously interned at the [Human Cyber-Physical Intelligence Lab](https://www.sysu-hcp.net/) at Sun Yat-sen University and participated in the X-Era & Sun Yat-sen University [Pop Mart](https://www.popmart.com/) Enterprise Project on VLM-based defect detection with RLHF.
 
-My research interests include visual language models, multi-modal intelligence, reinforcement learning, and agentic systems. I am particularly interested in aligning visual perception with complex reasoning and exploring unified generation toward a world model that integrates perception, reasoning, and creation.
+My research interests include visual language models, multi-modal intelligence, reinforcement learning, and agentic systems. I am particularly interested in aligning visual perception with complex reasoning and exploring unified generation toward a world model that integrates perception, reasoning, and creation. I’m open to any internship opportunities.
 
 Contact: fanyj28@mail2.sysu.edu.cn | WeChat available via phone (+86 18338635776)
