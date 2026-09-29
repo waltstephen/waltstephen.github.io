@@ -16,13 +16,6 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/publications/";
           },
-        },{id: "nav-cv",
-          title: "CV",
-          description: "",
-          section: "Navigation",
-          handler: () => {
-            window.location.href = "/https:/waltstephen.github.io/assets/pdf/yijiacv.pdf";
-          },
         },{id: "dropdown-bookshelf",
               title: "bookshelf",
               description: "",
@@ -417,6 +410,21 @@ ninja.data = [{
           section: "News",},{id: "news-started-research-internship-at-microsoft-research-asia-shanghai-ai-ml-group-working-on-video-generation-and-discretized-vlm-projects",
           title: 'Started research internship at Microsoft Research Asia – Shanghai AI/ML Group, working on...',
           description: "",
+          section: "News",},{id: "news-released-unig2u-bench-a-benchmark-studying-whether-generation-helps-understanding-in-unified-multimodal-models",
+          title: 'Released UniG2U-Bench, a benchmark studying whether generation helps understanding in unified multimodal models....',
+          description: "",
+          section: "News",},{id: "news-started-research-internship-with-the-sensenova-team-at-sensetime",
+          title: 'Started research internship with the SenseNova team at SenseTime.',
+          description: "",
+          section: "News",},{id: "news-released-resource2skill-distilling-executable-agent-skills-from-tutorial-videos-and-other-human-created-multimodal-resources",
+          title: 'Released Resource2Skill, distilling executable agent skills from tutorial videos and other human-created multimodal...',
+          description: "",
+          section: "News",},{id: "news-released-argus-a-general-purpose-agentic-reasoning-runtime-for-long-horizon-tasks",
+          title: 'Released Argus, a general-purpose agentic reasoning runtime for long-horizon tasks.',
+          description: "",
+          section: "News",},{id: "news-released-umm-reflection-arxiv-code-learning-native-reflection-in-unified-models-with-interleaved-reinforcement-learning",
+          title: 'Released UMM-Reflection (arXiv, code): learning native reflection in unified models with interleaved reinforcement...',
+          description: "",
           section: "News",},{id: "projects-project-1",
           title: 'project 1',
           description: "with background image",
@@ -473,13 +481,6 @@ ninja.data = [{
           section: "Teachings",handler: () => {
               window.location.href = "/teachings/introduction-to-machine-learning/";
             },},{
-        id: 'social-cv',
-        title: 'CV',
-        section: 'Socials',
-        handler: () => {
-          window.open("/assets/pdf/yijiacv.pdf", "_blank");
-        },
-      },{
         id: 'social-email',
         title: 'email',
         section: 'Socials',
