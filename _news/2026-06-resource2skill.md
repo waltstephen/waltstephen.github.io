@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Released [Resource2Skill](https://arxiv.org/abs/2606.29538), distilling executable agent skills from tutorial videos and other human-created multimodal resources.
+Released [Resource2Skill](https://arxiv.org/abs/2606.29538) ([code](https://github.com/microsoft/Resource2Skill)), distilling executable agent skills from tutorial videos and other human-created multimodal resources.
