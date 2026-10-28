@@ -405,7 +405,7 @@ const LINKS = {
   /* =====================================================================
      Gallery
      ===================================================================== */
-  const BENCHES = ["LIBERO", "LIBERO-PRO", "LIBERO-Plus", "LIBERO-MAX", "RoboTwin", "RoboDojo", "CaP-Bench", "Real robot"];
+  const BENCHES = ["LIBERO", "LIBERO-PRO", "LIBERO-Plus", "LIBERO-MAX", "RoboTwin", "RoboDojo", "Real robot"];
   const galleryItems = [];
   EP.libero.forEach((e) => galleryItems.push({ bench: "LIBERO", label: e.suite, text: e.instruction, video: e.video, poster: e.poster, think: e.requests ? ["libero", SOURCES.libero.list.indexOf(e)] : null }));
   (EP.robust || []).forEach((e, i) => galleryItems.push({ bench: e.bench, label: e.bench + " · " + e.pert, text: e.instruction, video: e.video, poster: e.poster, think: ["robust", i] }));
