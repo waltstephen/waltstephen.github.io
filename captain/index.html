@@ -11,8 +11,8 @@
 <meta property="og:url" content="https://waltstephen.github.io/captain/">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="assets/img/favicon.png">
-<link rel="stylesheet" href="css/fonts.css?v=pub2">
-<link rel="stylesheet" href="css/style.css?v=pub2">
+<link rel="stylesheet" href="css/fonts.css?v=pub4">
+<link rel="stylesheet" href="css/style.css?v=pub4">
 <script>
   /* apply the saved / preferred theme before first paint */
   (function () {
@@ -85,9 +85,9 @@
       <div class="oa-items"><b>SFT Data</b><b>Model Weights</b><b>CaPtain-Harness</b><b>Training Code</b><b>RL Infrastructure</b></div>
     </div>
     <div class="stats" id="stats">
-      <div class="stat reveal d1"><div class="num"><span data-count="73.8" data-dec="1">0</span><small>%</small></div><div class="lab">held-out LIBERO success</div><div class="sub">55.4% after SFT · 0% zero-shot</div></div>
-      <div class="stat reveal d2"><div class="num"><span data-count="78.5" data-dec="1">0</span></div><div class="lab">LIBERO-PRO Pos+Task (6-cell)</div><div class="sub">best without a frontier model or LIBERO-trained VLA</div></div>
-      <div class="stat reveal d3"><div class="num sm">+<span data-count="17.6" data-dec="1">0</span>–<span data-count="21.2" data-dec="1">0</span></div><div class="lab">points from RL on perturbation suites</div><div class="sub">LIBERO-PRO · LIBERO-Plus · LIBERO-MAX</div></div>
+      <a class="stat reveal d1" href="https://github.com/waltstephen/CaPtain" target="_blank" rel="noopener"><div class="num word">Train!</div><div class="lab">Train your own model on our baseline</div><div class="sub">SFT data · RL infrastructure · start from CaPtain-4B</div></a>
+      <a class="stat reveal d2" href="https://github.com/waltstephen/CaPtain-Harness" target="_blank" rel="noopener"><div class="num word">Build!</div><div class="lab">Build your own harness</div><div class="sub">fork CaPtain-Harness · add robots, tools and benchmarks</div></a>
+      <a class="stat reveal d3" href="https://github.com/waltstephen/CaPtain-Harness" target="_blank" rel="noopener"><div class="num word">Beat it!</div><div class="lab">Beat the community baseline</div><div class="sub">any OpenAI-compatible model · 8 benchmarks · one API</div></a>
     </div>
 
     <div class="tldr reveal"><b>TL;DR</b>A small open VLM (Qwen3.5-4B) can become a capable code-as-policy robot agent. <strong>CaPtain</strong> gives it only low-level perception and motion primitives, a cold start by SFT on synthetic agent trajectories, and RL in which a <strong>simulator critic</strong> reads privileged physical state to give each request its own credit. The resulting <strong>CaPtain-4B</strong> writes, runs and checks its own robot code, transfers zero-shot to RoboTwin 2.0, RoboDojo and SimplerEnv, and runs on a real arm after adaptation in simulation.</div>
@@ -370,9 +370,9 @@
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged view"></div>
 <div class="tip" id="tip" role="tooltip"></div>
 
-<script src="data/episodes.js?v=pub2"></script>
-<script src="data/tables.js?v=pub2"></script>
-<script src="js/main.js?v=pub2"></script>
+<script src="data/episodes.js?v=pub4"></script>
+<script src="data/tables.js?v=pub4"></script>
+<script src="js/main.js?v=pub4"></script>
 <script>setTimeout(function(){document.querySelectorAll(".reveal:not(.in)").forEach(function(e){var r=e.getBoundingClientRect();if(r.top<innerHeight)e.classList.add("in")})},2500);</script>
 </body>
 </html>
