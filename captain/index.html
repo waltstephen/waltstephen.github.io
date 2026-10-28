@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CaPtain: A Pipeline for Post-Training Code-as-Policy Robot Agents</title>
+<meta name="description" content="CaPtain is an open pipeline that post-trains a small open vision-language model into a code-as-policy robot agent: a low-level harness, SFT on synthetic agent trajectories, and RL with a simulator critic. CaPtain-4B reaches 78.5 on LIBERO-PRO.">
+<meta property="og:title" content="CaPtain: A Pipeline for Post-Training Code-as-Policy Robot Agents">
+<meta property="og:description" content="An open pipeline that turns Qwen3.5-4B into a code-as-policy robot agent. 73.8% held-out LIBERO, 78.5 on LIBERO-PRO, zero-shot transfer to RoboTwin 2.0, RoboDojo and SimplerEnv, and a real robot with simulated adaptation only.">
+<meta property="og:image" content="https://waltstephen.github.io/captain/assets/img/teaser.png">
+<meta property="og:url" content="https://waltstephen.github.io/captain/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="assets/img/favicon.png">
+<link rel="stylesheet" href="css/fonts.css?v=pub1">
+<link rel="stylesheet" href="css/style.css?v=pub1">
+<script>
+  /* apply the saved / preferred theme before first paint */
+  (function () {
+    try {
+      var t = localStorage.getItem("captain-theme");
+      if (!t) t = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  })();
+</script>
+</head>
+<body>
+
+<header class="topbar" id="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#top" aria-label="CaPtain home">CaPtain</a>
+    <nav class="topnav" aria-label="Sections">
+      <a href="#overview">Overview</a>
+      <a href="#think">Watch it think</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#results">Results</a>
+      <a href="#method">Method</a>
+      <a href="#real">Real robot</a>
+      <a href="#open">Open source</a>
+      <a href="blog/">Blog</a>
+      <a href="#bibtex">BibTeX</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.2M12 19.8V22M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2 12h2.2M19.8 12H22M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6"/></svg>
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ======================= HERO ======================= -->
+<section class="hero">
+  <div class="hero-bg" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="venue reveal d1"><span class="dot"></span>Code-as-policy · open post-training pipeline</div>
+    <h1 class="title reveal d1"><span class="brandword">CaPtain</span>: A Pipeline for <span style="white-space:nowrap">Post-Training</span> <span style="white-space:nowrap">Code-as-Policy</span> Robot Agents</h1>
+    <div class="authors reveal d2">
+      <span>Yijia Fan</span>
+      <span>Xilin He</span>
+      <span>Yilei Jiang</span>
+      <span>Dongming Wu</span>
+      <span>Jiaxu Wang</span>
+      <span>Xiangyu Yue<sup>†</sup></span>
+    </div>
+    <div class="affil reveal d2">MMLab, The Chinese University of Hong Kong</div>
+    <div class="affil-note reveal d2"><sup>†</sup> Corresponding author: <a href="mailto:xyyue@ie.cuhk.edu.hk">xyyue@ie.cuhk.edu.hk</a></div>
+
+    <div class="buttons reveal d3">
+      <a class="btn" data-link="paper" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8M8 9h2"/></svg>Paper</a>
+      <a class="btn" data-link="code" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.77.11 3.06.74.8 1.19 1.83 1.19 3.09 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>Code</a>
+      <a class="btn" data-link="models" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.3 7 12 12l8.7-5M12 22V12"/></svg>Models</a>
+      <a class="btn" data-link="data" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.66 3.58 3 8 3s8-1.34 8-3V5M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3"/></svg>Data</a>
+      <a class="btn" data-link="video" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="m17 10 5-3v10l-5-3z"/></svg>Video</a>
+    </div>
+
+    <div class="openall reveal d3">
+      <div class="oa-head"><span class="oa-burst">All open!</span><span class="oa-text">The first fully open, all-stage pipeline for a small, pure <span style="white-space:nowrap">code-as-policy</span> model</span></div>
+      <div class="oa-items"><b>SFT Data</b><b>Model Weights</b><b>CaPtain-Harness</b><b>Training Code</b><b>RL Infrastructure</b></div>
+    </div>
+    <div class="stats" id="stats">
+      <div class="stat reveal d1"><div class="num"><span data-count="73.8" data-dec="1">0</span><small>%</small></div><div class="lab">held-out LIBERO success</div><div class="sub">55.4% after SFT · 0% zero-shot</div></div>
+      <div class="stat reveal d2"><div class="num"><span data-count="78.5" data-dec="1">0</span></div><div class="lab">LIBERO-PRO Pos+Task (6-cell)</div><div class="sub">best without a frontier model or LIBERO-trained VLA</div></div>
+      <div class="stat reveal d3"><div class="num sm">+<span data-count="17.6" data-dec="1">0</span>–<span data-count="21.2" data-dec="1">0</span></div><div class="lab">points from RL on perturbation suites</div><div class="sub">LIBERO-PRO · LIBERO-Plus · LIBERO-MAX</div></div>
+    </div>
+
+    <div class="tldr reveal"><b>TL;DR</b>A small open VLM (Qwen3.5-4B) can become a capable code-as-policy robot agent. <strong>CaPtain</strong> gives it only low-level perception and motion primitives, a cold start by SFT on synthetic agent trajectories, and RL in which a <strong>simulator critic</strong> reads privileged physical state to give each request its own credit. The resulting <strong>CaPtain-4B</strong> writes, runs and checks its own robot code, transfers zero-shot to RoboTwin 2.0, RoboDojo and SimplerEnv, and runs on a real arm after adaptation in simulation.</div>
+  </div>
+</section>
+
+<!-- ======================= ABSTRACT + TEASER ======================= -->
+<section class="section" id="overview" style="padding-top:40px">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Overview</div>
+      <h2 class="section-title">Abstract</h2>
+    </div>
+    <div class="abstract reveal">
+      <p>Code-as-policy (CaP) agents control robots by writing programs over perception and motion APIs, and generalize beyond other robot policy architectures. Their wide adoption has been difficult for two reasons. First, the strongest CaP agents are built on closed frontier models, which cannot be retrained or deployed locally. Second, prior work has not shown how to post-train small open models, which fail zero-shot, into capable CaP agents.</p>
+      <p>We present <strong>CaPtain</strong>, an open pipeline that post-trains a small open vision-language model into a CaP agent in three steps. First, CaPtain-Harness exposes only low-level perception and motion primitives, with no high-level skills, shared by simulation and real robots. Second, supervised fine-tuning (SFT) on synthetic agent trajectories collected in this harness (generated with GPT-6 Astra) provides a cold start. Third, reinforcement learning (RL) tackles the hardest part, credit assignment over long embodied episodes whose success is observed only at the end. A small critic reads the simulator's physical state, such as object poses, grasp state and sub-goal progress, and turns the change in its predicted success across each request into that request's credit, while the policy does not see this state.</p>
+      <p>Applied to Qwen3.5-4B, which scores 0% zero-shot, the pipeline raises held-out LIBERO success to 55.4% after SFT and 73.8% after RL, and the gain persists on three perturbation suites (+17.6 to +21.2 points). On LIBERO-PRO, the resulting <strong>CaPtain-4B</strong> reaches 78.5, the best result we know of among systems without a frontier model or a LIBERO-trained VLA at test time. The agent also transfers zero-shot to the new scenes and tasks of RoboTwin 2.0 and to the new embodiments of RoboDojo and SimplerEnv (83.3% on WidowX); the pipeline extends to a real robot without any real-world training data, completing tasks with new objects and layouts. We release CaPtain-Harness, the SFT data, the training code and the CaPtain-4B weights.</p>
+    </div>
+
+    <div class="fig-tabs chips reveal" id="figTabs" role="tablist" style="margin-top:34px">
+      <button class="chip on" data-fig="0" role="tab">At a glance</button>
+      <button class="chip" data-fig="1" role="tab">Method overview</button>
+      <button class="chip" data-fig="2" role="tab">Harness design</button>
+    </div>
+    <div class="card reveal" id="figStack">
+      <figure class="figure" data-fig="0">
+        <img class="zoomable" src="assets/img/teaser.png" alt="CaPtain-4B at a glance: one successful episode, SFT to RL across LIBERO, LIBERO-PRO comparison, real robot, cost and zero-shot transfer" width="3200" height="1792">
+        <figcaption><b>CaPtain-4B at a glance.</b> A small, open code-as-policy agent: one successful LIBERO episode (look, reach, grasp, lift, place, finish), SFT → RL across the LIBERO family, its place among published LIBERO-PRO systems, the real robot, cost, and zero-shot transfer.</figcaption>
+      </figure>
+      <figure class="figure" data-fig="1" hidden>
+        <img class="zoomable" src="assets/img/method_overview.png" alt="Overview of CaPtain: inference in CaPtain-Harness (top) and training and test (bottom)" width="3200" height="1664" loading="lazy">
+        <figcaption><b>Overview of CaPtain.</b> <i>Top:</i> one episode in CaPtain-Harness. At each request the policy writes a Python cell against a low-level API and receives text receipts and new images, for up to 60 requests. <i>Bottom:</i> SFT on synthetic agent trajectories, then RL in which a simulator critic turns privileged physical state into per-request credit; the critic is removed at test time.</figcaption>
+      </figure>
+      <figure class="figure" data-fig="2" hidden>
+        <img class="zoomable" src="assets/img/harness_design.png" alt="Design of CaPtain-Harness" width="3200" height="1440" loading="lazy">
+        <figcaption><b>Design of CaPtain-Harness.</b> The policy writes Python into a persistent session (1) that exposes only low-level primitives (2); motions are executed with IK and guarded contact (3), every call returns a receipt (4), a completion gate checks the agent's own measurements (5), and only the backend below the API changes across environments (6). Receipt values are illustrative.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= WATCH IT THINK ======================= -->
+<section class="section" id="think">
+  <div class="wrap-wide">
+    <div class="section-head reveal">
+      <div class="eyebrow">Watch it think</div>
+      <h2 class="section-title">Every action is a line of code</h2>
+      <p class="section-lead">CaPtain-4B acts only by writing Python against a low-level API. Press play: the panel shows the cell the agent wrote at that moment, its short reasoning, and the receipts the harness returned. Click any tick to jump to a request.</p>
+    </div>
+    <div class="chips think-tabs reveal" id="thinkTabs" role="tablist">
+      <button class="chip on" data-src="real" role="tab">Real robot</button>
+      <button class="chip" data-src="libero" role="tab">LIBERO simulation</button>
+      <button class="chip" data-src="robust" role="tab">LIBERO-PRO / Plus / MAX</button>
+      <button class="chip" data-src="transfer" role="tab">Zero-shot transfer</button>
+    </div>
+    <div class="ep-picker reveal" id="epPicker" aria-label="Choose an episode"></div>
+    <div class="card reveal" id="playerCard"><div class="noscript-note" style="padding:40px">Turn on JavaScript to play the episodes.</div></div>
+    <p class="player-note" id="playerNote"></p>
+  </div>
+</section>
+
+<!-- ======================= GALLERY ======================= -->
+<section class="section" id="gallery">
+  <div class="wrap-wide">
+    <div class="section-head reveal">
+      <div class="eyebrow">Gallery</div>
+      <h2 class="section-title">Successful episodes across benchmarks</h2>
+      <p class="section-lead">Successful episodes of the RL-trained policy in the four LIBERO suites (official held-out initial states), under the LIBERO-PRO, LIBERO-Plus and LIBERO-MAX perturbations, on RoboTwin 2.0 and RoboDojo without any training on them, and on a real arm. Clips play when they scroll into view; thinking time is cut and motion is sped up (LIBERO-family replays 6× simulated time, real robot 2×; RoboTwin and RoboDojo clips are the camera frames the agent requested).</p>
+    </div>
+    <div class="chips reveal" id="galleryChips"></div>
+    <div class="gallery" id="galleryGrid"></div>
+  </div>
+</section>
+
+<!-- ======================= RESULTS ======================= -->
+<section class="section" id="results">
+  <div class="wrap-wide">
+    <div class="section-head reveal">
+      <div class="eyebrow">Results</div>
+      <h2 class="section-title">RL gains survive perturbation</h2>
+      <p class="section-lead">We train only on the 40 original LIBERO tasks. The perturbations of these suites never appear in training. Paired episodes, exact McNemar tests.</p>
+    </div>
+
+    <div class="card gainbars reveal" id="gainCard">
+      <div class="gb-head">
+        <h3>SFT vs. RL on the LIBERO family</h3>
+        <div class="chips" id="gainMetric">
+          <button class="chip on" data-m="0">Host success</button>
+          <button class="chip" data-m="1">Strict success (ended with finish())</button>
+        </div>
+      </div>
+      <div class="legend" style="margin-bottom:8px"><span><i style="background:#9fb1bd"></i>CaPtain-4B-SFT</span><span><i style="background:var(--verm)"></i>CaPtain-4B (RL)</span><span class="muted">Δ in points, McNemar p below</span></div>
+      <div id="gainRows"></div>
+      <div class="board-notes">Base Qwen3.5-4B solves 0 of 240 LIBERO episodes and 0.3% on LIBERO-PRO: it exhausts its request budget misusing the interface. <i>Host</i>: the benchmark predicate on the final state. <i>Strict</i>: additionally requires that the agent ended the episode with <code>finish()</code>.</div>
+    </div>
+
+    <div class="section-head reveal" style="margin-top:60px">
+      <div class="eyebrow">Leaderboards</div>
+      <h2 class="section-title">Where CaPtain-4B stands</h2>
+      <p class="section-lead">Sort by any column, filter by policy family or by whether a frontier model is queried while the robot acts. Superscripts mark protocol differences; hover them for details.</p>
+    </div>
+    <div class="chips board-tabs reveal" id="boardTabs" role="tablist"></div>
+    <div class="card board reveal" id="board"></div>
+
+    <div class="two-figs">
+      <figure class="card figure reveal d1">
+        <img class="zoomable" src="assets/img/sft_vs_rl.png" alt="SFT vs RL host and strict success on held-out LIBERO and four perturbation suites" loading="lazy">
+        <figcaption><b>RL gains survive perturbation.</b> SFT vs. RL host and strict success on held-out LIBERO and on four perturbation suites.</figcaption>
+      </figure>
+      <figure class="card figure reveal d2">
+        <img class="zoomable" src="assets/img/breakdown.png" alt="Breakdown of results by suite, perturbation dimension and LIBERO-PRO cell" loading="lazy">
+        <figcaption><b>Breakdown.</b> (a) LIBERO strict success by suite. (b) LIBERO-Plus host success by perturbation dimension: all seven improve at p &lt; 0.05. (c) LIBERO-PRO Pos+Task host success per cell.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= METHOD ======================= -->
+<section class="section" id="method">
+  <div class="wrap-wide">
+    <div class="section-head reveal">
+      <div class="eyebrow">Method</div>
+      <h2 class="section-title">Three steps from a 4B VLM to a robot agent</h2>
+      <p class="section-lead">Each step answers one question: which actions the agent may call, how a model that fails zero-shot gets a working start, and how credit reaches the right request in a long episode whose success is observed only at the end.</p>
+    </div>
+    <div class="steps">
+      <div class="card step reveal d1">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg></div>
+        <div class="no">STEP 1</div>
+        <h3>CaPtain-Harness</h3>
+        <p>A ReAct loop in which actions are code. The only tool is a persistent, sandboxed Python session with a pre-imported <code>robot</code> module.</p>
+        <ul>
+          <li>22 low-level capabilities: perception, geometric measurement, IK-level motion. No grasp, place or open-drawer skills and no VLA.</li>
+          <li>Robot calls do not raise exceptions; each returns a text <b>receipt</b> of what physically happened.</li>
+          <li>A completion gate checks the agent's own measurements before <code>finish()</code>.</li>
+          <li>The policy-facing API is unchanged across LIBERO, RoboTwin 2.0, RoboDojo, CaP-Bench and a real robot; backend adapters sit below it.</li>
+        </ul>
+      </div>
+      <div class="card step reveal d2">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5M8 7h8M8 11h6"/></svg></div>
+        <div class="no">STEP 2</div>
+        <h3>SFT cold start</h3>
+        <p>Supervised fine-tuning on synthetic agent trajectories collected in the harness itself, rendered with the exact chat template, <code>TASK.md</code>, tool schema and receipts the policy later sees.</p>
+        <ul>
+          <li>Only agent tokens are supervised, reasoning as well as code; harness outputs are context.</li>
+          <li><b>Forcing the model to look:</b> earlier pixel coordinates in the history are masked with probability 0.2, so new calls must be grounded in the current image.</li>
+          <li>All language-model weights are trained; the vision tower is frozen.</li>
+        </ul>
+      </div>
+      <div class="card step reveal d3">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15h3v-3h4V7h5"/></svg></div>
+        <div class="no">STEP 3</div>
+        <h3>RL with a simulator critic</h3>
+        <p>A small critic reads 36 privileged features of the simulator state (end-effector and jaw, goal bookkeeping, distances, lift, articulated joints, held flags) and predicts success. The change in its prediction across a request is that request's credit.</p>
+        <ul>
+          <li>Ensemble of five small MLPs, co-trained online with the policy.</li>
+          <li>The critic is used only in training and removed at test time.</li>
+          <li>Returns separate deployable outcomes: 1 for success with <code>finish()</code>, −0.3 for a false finish.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card critic reveal">
+      <div class="critic-plot">
+        <div class="gb-head" style="margin-bottom:6px">
+          <h3 style="font-size:18px">The critic turns physics into per-request credit</h3>
+          <button class="replay" id="criticReplay">Replay</button>
+        </div>
+        <div id="criticPlot" aria-label="Predicted success over requests for a real successful episode"></div>
+        <div class="board-notes">Real trace: predicted chance of success per request in one successful LIBERO episode, from the simulator critic of our offline study. Requests that only perceive or verify leave the physical state unchanged and receive almost no credit; the grasp does not.</div>
+      </div>
+      <div class="critic-text">
+        <h3>Per-request credit</h3>
+        <p>For request <i>t</i> of an episode, the temporal-difference credit is the change in predicted success it causes, plus its small cost:</p>
+        <div class="eq">δ<sub>t</sub> = c<sub>t</sub> + V(s<sub>t+1</sub>, t) − V(s<sub>t</sub>, t)</div>
+        <p>Both values use the same index <i>t</i>, so the passage of time alone produces no credit. Perception requests still get credit through GAE (λ = 0.9) from the physical actions they enable, and a group-relative outcome term ranks the G = 4 rollouts from the same start.</p>
+        <div class="kv">
+          <div><b>0.970</b><span>critic AUC for final success (0.904 within same-start groups)</span></div>
+          <div><b>+0.058</b><span>ΔV for successful grasps vs. −0.0002 for perception-only requests</span></div>
+          <div><b>65%</b><span>of advantage mass on moves; 14% grasps, 14% releases, 1.3% perception</span></div>
+          <div><b>0.907</b><span>held-out AUC of the warm-start critic used for RL</span></div>
+        </div>
+        <p class="muted" style="font-size:12.5px;margin-top:10px">AUC, ΔV and advantage-mass statistics are from offline studies on an earlier 9B policy (15k episodes, 573k request states).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= REAL ROBOT ======================= -->
+<section class="section" id="real">
+  <div class="wrap-wide">
+    <div class="section-head reveal">
+      <div class="eyebrow">Real robot</div>
+      <h2 class="section-title">Same API, real arm, no real-world training data</h2>
+      <p class="section-lead">The simulator is replaced by a hardware backend for an XR1 arm with a head RGB-D camera, a wrist camera, a kinematic twin updated from the measured joints, and safety guards. The policy-facing API and receipts are unchanged.</p>
+    </div>
+    <div class="real-grid">
+      <figure class="card figure reveal d1">
+        <img class="zoomable" src="assets/img/twin_vs_real.jpg" alt="The twin simulation used to adapt the policy to the XR1 arm and the real scene at test time" loading="lazy">
+        <figcaption>The coarse twin simulation used to adapt the policy to the XR1 arm (left) and the real scene at test time (right).</figcaption>
+      </figure>
+      <div class="card txt reveal d2">
+        <p>The XR1 arm differs from the simulated Panda in kinematics, reach, gripper geometry and camera placement. We therefore use a checkpoint fine-tuned on episodes from a <b>coarse twin simulation</b> of the XR1, which teaches the policy the conventions of the new embodiment. The twin uses primitive objects and untextured surfaces and does not reconstruct the real scene.</p>
+        <p>The policy is adapted with simulated XR1 episodes only and uses no real-world data. Both tasks below use new objects and layouts, and are completed with the same low-level primitives used in simulation. The second requires reasoning about the instruction: the cube with the colour of the sky is the light-blue one, and the container that is not round is the rectangular tray.</p>
+        <p><a href="#think" data-goto-think="real">Watch both episodes with their code →</a></p>
+      </div>
+    </div>
+    <div class="real-steps">
+      <div class="card trace reveal d1">
+        <h4>(a) “Put the yellow cube in the wooden tray.”</h4>
+        <div class="ti">23 requests · 157 s in the log (incl. model inference)</div>
+        <ol>
+          <li><span class="r">1–5</span><span><code>observe</code>, click cube and tray, <code>segment</code> + <code>select_detection</code>; first binding rejected, re-click; cube 3.0 cm tall</span></li>
+          <li class="phys"><span class="r">6–8</span><span>Inspect contact geometry, move 11 cm above the cube, descend at 2.5 cm/s</span></li>
+          <li class="phys"><span class="r">9–10</span><span>Close (open fraction 1.00 → 0.33), lift 11.5 cm: cube rises with the gripper</span></li>
+          <li class="phys"><span class="r">11–18</span><span>Carry 12 cm over the tray; stale query rejected, occluded masks judged unreliable; raise 6 cm and re-measure the held cube</span></li>
+          <li class="phys"><span class="r">19–21</span><span>Lower to 1 cm above the tray floor, open, retreat 17 cm</span></li>
+          <li class="fin"><span class="r">22–23</span><span>Fresh measurement: centre inside the tray footprint, offset (2.0, −2.1) cm → <code>finish()</code> accepted</span></li>
+        </ol>
+      </div>
+      <div class="card trace reveal d2">
+        <h4>(b) “Put the cube that has the color of the sky into the container that is not round.”</h4>
+        <div class="ti">29 requests · 177 s in the log (incl. model inference)</div>
+        <ol>
+          <li><span class="r">1–3</span><span>Reasoning: the pale-blue cube matches the sky; the brown tray is rectangular and the white bowl is round, so it is excluded. Measure cube (3.4 × 3.5 cm)</span></li>
+          <li class="phys"><span class="r">4–7</span><span>Approach and guarded descent stop 4 mm above target with no force; re-select (stale detection rejected), close, lift 7 cm</span></li>
+          <li class="phys"><span class="r">8–14</span><span>Occluded masks of the held cube rejected; raise 10 cm more, move above the tray centre</span></li>
+          <li class="phys"><span class="r">15–16</span><span>Lower towards the tray floor (stalls 1 cm above, no force), open, retreat 15 cm</span></li>
+          <li class="fin"><span class="r">17–29</span><span>Several tray masks rejected; final: centre inside footprint and volume, offset (−1.4, 3.6) cm → <code>finish()</code> accepted</span></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= OPEN SOURCE ======================= -->
+<section class="section" id="open">
+  <div class="wrap-wide">
+    <div class="section-head reveal">
+      <div class="eyebrow">Open source</div>
+      <h2 class="section-title">Everything you need to post-train your own</h2>
+      <p class="section-lead">A local 4B model and a low-level API: no frontier model and no VLA skill at test time.</p>
+    </div>
+    <div class="oss">
+      <a class="card reveal d1" data-link="harness" href="#" target="_blank" rel="noopener"><div class="k">Harness</div><h3>CaPtain-Harness</h3><p>Environment-agnostic harness with 22 low-level capabilities, receipts and a completion gate; backends for LIBERO, RoboTwin 2.0, RoboDojo and CaP-Bench.</p><div class="go">GitHub →</div></a>
+      <a class="card reveal d2" data-link="training" href="#" target="_blank" rel="noopener"><div class="k">Training</div><h3>Training code</h3><p>SFT and asynchronous RL with the simulator critic, per-request credit and gradient accumulation.</p><div class="go">GitHub →</div></a>
+      <a class="card reveal d3" data-link="model4b" href="#" target="_blank" rel="noopener"><div class="k">Weights</div><h3>CaPtain-4B</h3><p>The RL policy (Qwen3.5-4B) behind the reported benchmark results.</p><div class="go">Hugging Face →</div></a>
+      <a class="card reveal d3" data-link="model4bsft" href="#" target="_blank" rel="noopener"><div class="k">Weights</div><h3>CaPtain-4B-SFT</h3><p>The cold-start checkpoint after Stage 1; initializes RL and serves as the KL reference.</p><div class="go">Hugging Face →</div></a>
+      <a class="card reveal d4" data-link="sftdata" href="#" target="_blank" rel="noopener"><div class="k">Data</div><h3>SFT data</h3><p>Synthetic agent trajectories collected in CaPtain-Harness, in the exact format the policy sees.</p><div class="go">Hugging Face →</div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= BIBTEX ======================= -->
+<section class="section" id="bibtex">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Citation</div>
+      <h2 class="section-title">BibTeX</h2>
+    </div>
+    <div class="bib reveal">
+      <button class="copy" id="copyBib"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button>
+<pre id="bibText">@article{fan2026captain,
+  title   = {CaPtain: A Pipeline for Post-Training Code-as-Policy Robot Agents},
+  author  = {Fan, Yijia and He, Xilin and Jiang, Yilei and Wu, Dongming and Wang, Jiaxu and Yue, Xiangyu},
+  journal = {arXiv preprint},
+  year    = {2026}
+}</pre>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div>MMLab, The Chinese University of Hong Kong · 2026</div>
+  <div style="margin-top:4px">Page layout inspired by academic project pages; no tracking, no cookies.</div>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged view"></div>
+<div class="tip" id="tip" role="tooltip"></div>
+
+<script src="data/episodes.js?v=pub1"></script>
+<script src="data/tables.js?v=pub1"></script>
+<script src="js/main.js?v=pub1"></script>
+<script>setTimeout(function(){document.querySelectorAll(".reveal:not(.in)").forEach(function(e){var r=e.getBoundingClientRect();if(r.top<innerHeight)e.classList.add("in")})},2500);</script>
+</body>
+</html>
