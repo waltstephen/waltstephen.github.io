@@ -584,7 +584,7 @@ const LINKS = {
         B.columns.forEach((c) => {
           const v = r[c.key]; let td;
           if (c.key === "system") td = el("td", "sys", esc(r.system) + (r.sysFn ? fnHTML({ fn: r.sysFn }, B) : ""));
-          else if (c.type === "bool") td = el("td", null, v ? '<span class="yes">✓ yes</span>' : '<span class="no">✗ no</span>');
+          else if (c.type === "bool") td = el("td", null, v == null ? "–" : v ? '<span class="yes">✓ yes</span>' : '<span class="no">✗ no</span>');
           else if (c.type === "num" && c.bar) {
             td = el("td", "num barcell");
             const w = v == null ? 0 : (100 * val(v)) / maxBar;
