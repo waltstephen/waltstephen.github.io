@@ -729,3 +729,25 @@ footer {
 .oa-items b:hover { transform: translateY(-3px) rotate(0); }
 @keyframes oa-pop { 0%, 100% { transform: rotate(-4deg) scale(1); } 50% { transform: rotate(-2deg) scale(1.06); } }
 @media (prefers-reduced-motion: reduce) { .oa-burst { animation: none; } }
+/* community-baseline call-outs in the hero bursts */
+a.stat { text-decoration: none; color: inherit; display: block; cursor: pointer; }
+a.stat:hover { text-decoration: none; }
+.stat .num.word { font-size: clamp(34px, 3.6vw, 46px); letter-spacing: .03em; text-transform: uppercase; }
+.stat .lab { font-size: 17px; }
+/* open-source tags hop and wiggle on their own, one after another */
+.oa-items b { animation: oa-hop 3.6s ease-in-out infinite; }
+.oa-items b:nth-child(1) { animation-delay: 0s; }
+.oa-items b:nth-child(2) { animation-delay: .35s; }
+.oa-items b:nth-child(3) { animation-delay: .7s; }
+.oa-items b:nth-child(4) { animation-delay: 1.05s; }
+.oa-items b:nth-child(5) { animation-delay: 1.4s; }
+.oa-items b:hover { animation-play-state: paused; }
+@keyframes oa-hop {
+  0%, 62%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
+  68% { transform: translateY(-9px) rotate(calc(var(--r, 0deg) - 4deg)); }
+  74% { transform: translateY(0) rotate(calc(var(--r, 0deg) + 3deg)); }
+  79% { transform: translateY(-4px) rotate(calc(var(--r, 0deg) - 2deg)); }
+  84% { transform: translateY(0) rotate(var(--r, 0deg)); }
+}
+.oa-items b:nth-child(odd) { --r: -1.5deg; } .oa-items b:nth-child(even) { --r: 1.5deg; }
+@media (prefers-reduced-motion: reduce) { .oa-items b { animation: none; } }
