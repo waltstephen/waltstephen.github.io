@@ -751,3 +751,6 @@ a.stat:hover { text-decoration: none; }
 }
 .oa-items b:nth-child(odd) { --r: -1.5deg; } .oa-items b:nth-child(even) { --r: 1.5deg; }
 @media (prefers-reduced-motion: reduce) { .oa-items b { animation: none; } }
+.oa-items b a { color: inherit; text-decoration: none; }
+.oa-items b a:hover { text-decoration: none; }
+.oa-items b:hover { background: var(--gold); cursor: pointer; }
