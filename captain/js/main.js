@@ -10,7 +10,7 @@ const LINKS = {
   code: "https://github.com/waltstephen/CaPtain",
   models: "https://huggingface.co/YijiaFan/CaPtain-4B",
   data: "https://huggingface.co/datasets/YijiaFan/CaPtain-SFT-Data",
-  video: "assets/video/captain_explainer_en.mp4",
+  video: "https://youtu.be/KMy-Bx5HXsg",
   harness: "https://github.com/waltstephen/CaPtain-Harness",
   training: "https://github.com/waltstephen/CaPtain",
   model4b: "https://huggingface.co/YijiaFan/CaPtain-4B",
