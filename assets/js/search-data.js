@@ -37,11 +37,11 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/blog/";
               },
-            },{id: "post-captain-post-training-a-4b-model-into-a-code-as-policy-robot-agent",
+            },{id: "post-captain-betting-on-code-as-the-action-space",
         
-          title: "CaPtain: post-training a 4B model into a code-as-policy robot agent",
+          title: "CaPtain: betting on code as the action space",
         
-        description: "How we post-train Qwen3.5-4B into a code-as-policy robot agent with a low-level harness, SFT, and RL with a simulator critic.",
+        description: "Why we think code is the right interface between a vision-language model and a robot, and what it took to post-train a 4B model to use it.",
         section: "Posts",
         handler: () => {
           
