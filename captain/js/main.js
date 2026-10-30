@@ -6,7 +6,7 @@
    Links that are still "#" get a small "soon" badge.
    ===================================================================== */
 const LINKS = {
-  paper: "#",        // arXiv link (shows a "soon" badge until it is set)
+  paper: "assets/paper/CaPtain.pdf",
   code: "https://github.com/waltstephen/CaPtain",
   models: "https://huggingface.co/YijiaFan/CaPtain-4B",
   data: "https://huggingface.co/datasets/YijiaFan/CaPtain-SFT-Data",
